@@ -4,9 +4,23 @@
     box-sizing: border-box;
 }
 
+@keyframes fireBackground {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes glow {
+    0% { text-shadow: 0 0 10px #ff4400, 0 0 20px #ff4400, 0 0 30px #ff4400; }
+    50% { text-shadow: 0 0 20px #ff6600, 0 0 30px #ff6600, 0 0 40px #ff6600; }
+    100% { text-shadow: 0 0 10px #ff4400, 0 0 20px #ff4400, 0 0 30px #ff4400; }
+}
+
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #1a1a1a;
+    background: linear-gradient(45deg, #1a0000, #2d0000, #400000);
+    background-size: 400% 400%;
+    animation: fireBackground 15s ease infinite;
     color: #fff;
     min-height: 100vh;
     display: flex;
@@ -17,30 +31,51 @@ body {
 .container {
     text-align: center;
     padding: 2rem;
-    background-color: #2a2a2a;
+    background: rgba(20, 0, 0, 0.8);
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    border: 2px solid #8b0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3),
+                inset 0 0 30px rgba(255, 68, 0, 0.2);
+    border: 2px solid #ff4400;
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 68, 0, 0.1) 0%, transparent 70%);
+    animation: fireBackground 8s ease infinite;
+    z-index: -1;
 }
 
 h1 {
-    color: #8b0000;
+    color: #ff4400;
     margin-bottom: 2rem;
     font-size: 2.5rem;
     text-transform: uppercase;
     letter-spacing: 2px;
+    animation: glow 3s ease-in-out infinite;
+    text-shadow: 0 0 10px rgba(255, 68, 0, 0.7);
 }
 
 .timer-container {
     margin-bottom: 2rem;
+    position: relative;
 }
 
 #timer {
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: bold;
     margin-bottom: 1rem;
     color: #fff;
-    text-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+    text-shadow: 0 0 20px #ff4400,
+                 0 0 40px #ff4400;
+    animation: glow 2s ease-in-out infinite;
+    font-family: 'Arial Black', sans-serif;
 }
 
 .controls {
@@ -52,16 +87,21 @@ h1 {
 button {
     padding: 0.8rem 1.5rem;
     font-size: 1.1rem;
-    background-color: #8b0000;
+    background: linear-gradient(45deg, #ff4400, #ff6600);
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(255, 68, 0, 0.5);
 }
 
 button:hover {
-    background-color: #a00000;
+    background: linear-gradient(45deg, #ff6600, #ff8800);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 68, 0, 0.7);
 }
 
 .player-turn {
@@ -72,13 +112,17 @@ button:hover {
 
 .player {
     padding: 1rem;
-    background-color: #333;
+    background: rgba(51, 0, 0, 0.6);
     border-radius: 5px;
     flex: 1;
     transition: all 0.3s;
+    border: 1px solid rgba(255, 68, 0, 0.3);
 }
 
 .player.active {
-    background-color: #8b0000;
+    background: linear-gradient(45deg, #ff4400, #ff6600);
     transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 68, 0, 0.5);
+    animation: glow 2s ease-in-out infinite;
+    border: none;
 } 
